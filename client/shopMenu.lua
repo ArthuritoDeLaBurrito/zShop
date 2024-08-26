@@ -1,4 +1,4 @@
-shopMain = zUI.CreateMenu(" ", "Super Market", nil, nil, "https://media.discordapp.net/attachments/1275932606768222400/1277250561003098203/shopui_title_gunclub_1.png?ex=66cc7bc7&is=66cb2a47&hm=1be2344120cb9c5b2c1509d53aa77966cb5745a788725a326ffdc0e14fe23045&=&format=webp&quality=lossless")
+shopMain = zUI.CreateMenu(" ", "Super Market", nil, nil, "https://media.discordapp.net/attachments/1275932606768222400/1277250560776732733/shopui_title_conveniencestore_1.png?ex=66cd2487&is=66cbd307&hm=fbf2b87050e0239e24d0e2b3d241bbdf0fe101f1e055dfa7886676935cb7efec&=&format=webp&quality=lossless")
 local shopBasket = zUI.CreateSubMenu(shopMain, " ", "Super Market")
 
 local basketList, basketListIndex = {}, 1
@@ -7,7 +7,7 @@ shopSelect = ""
 shopMain:SetItems(function(Items)
     Items:AddButton("Mon Panier", 'Accéder à ~g~"Mon Panier"~s~.', { RightBadge = "ARMOUR_ICON_A"},
     nil, shopBasket)
-    Items:AddLine({ "#f34747", "#ff0000"})
+    Items:AddLine({ "#006B57"})
     for itemName, itemData in pairs(shopItems[shopSelect]) do
         if itemData.LeftBadge ~= nil then
             Items:AddButton(("%s"):format(itemData.label), ('Ajouter un / une ~g~"%s"~s~ à votre panier.'):format(itemData.label), { RightLabel = ("~g~%s$"):format(itemData.price), LeftBadge = itemData.LeftBadge},
@@ -45,11 +45,12 @@ shopBasket:SetItems(function(Items)
     Items:AddButton("Vider le panier", "Retirer les ~g~Articles du Panier~s~", { RightBadge = "ALERT_TRIANGLE", Color = "#ff0000"},
     function(onSelected, onHovered)
         if onSelected then
-            basketList = {}
+            local confirm = zUI.AlertInput("SuperMarker", "", "Voulez vous supprimer le Panier ?")
+            if confirm then basketList = {} end
         end
     end)
     Items:AddSeparator("Mon Panier")
-    Items:AddLine({ "#f34747", "#ff0000"})
+    Items:AddLine({ "#006B57"})
     for itemName, itemData in pairs(basketList) do
         Items:AddButton(("%sx %s"):format(itemData.quantity, itemData.label), ('Modification d\'un / d\'une ~g~"%s"~s~.'):format(itemData.label), { RightLabel = ("~g~%s$"):format(itemData.priceQuantity)},
         function(onSelected, onHovered)

@@ -1,28 +1,26 @@
 ---@param Title string @Titre de l'input
 ---@param Subtitle string @Sous-titre de l'input
----@param PlaceHolder string @PlaceHolder
----@param MaxStringLenght number @Nombre maximum de caractères
-function zUI.KeyboardInput(Title, Subtitle, PlaceHolder, MaxStringLenght)
+---@param Description string @Description
+function zUI.AlertInput(Title, Subtitle, Description)
     local NuiResponse
     SendNUIMessage({
-        action = "zUI-KeyboardInput",
+        action = "zUI-AlertInput",
         data = {
             Title = Title,
             Subtitle = Subtitle,
-            Placeholder = PlaceHolder,
-            MaxLength = MaxStringLenght,
+            Description = Description,
             Color = Config.DefaultColor
         }
     })
     SetNuiFocus(true, true)
     NuiResponse = nil
     local promise = promise.new()
-    RegisterNUICallback('zUI-KeyboardResult', function(data, cb)
+    RegisterNUICallback('zUI-AlertResult', function(data, cb)
         NuiResponse = data.inputValue
         promise:resolve(NuiResponse)
         cb('ok')
     end)
-    RegisterNUICallback('zUI-KeyboardCancel', function(data, cb)
+    RegisterNUICallback('zUI-AlertCancel', function(data, cb)
         NuiResponse = nil
         promise:resolve(NuiResponse)
         cb('ok')
